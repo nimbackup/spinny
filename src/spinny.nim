@@ -37,8 +37,6 @@ proc newSpinny*(text: string, s: Spinner, time = false): Spinny =
     interval: s.interval,
     trackTime: time
   )
-  if time:
-    result.startTime = getMonoTime()
 
 proc newSpinny*(text: string, spinType: SpinnerKind, time = false): Spinny =
   newSpinny(text, Spinners[spinType], time)
@@ -83,6 +81,8 @@ proc timeDiff(d: Duration): string =
 
 proc spinnyLoop(spinny: Spinny) {.thread.} =
   var frameCounter = 0
+  # Store the starting time here
+  spinny.startTime = getMonoTime()
 
   while spinny.running:
     let data = spinnyChannel.tryRecv()
@@ -125,6 +125,7 @@ proc stop(spinny: Spinny, kind: EventKind, payload = "") =
   spinnyChannel.send(SpinnyEvent(kind: kind, payload: payload))
   spinnyChannel.send(SpinnyEvent(kind: Stop))
   joinThread(spinny.t)
+  # We need to output a newline at the end
   echo ""
 
 proc stop*(spinny: Spinny) =
