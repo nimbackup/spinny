@@ -81,8 +81,9 @@ proc timeDiff(d: Duration): string =
 
 proc spinnyLoop(spinny: Spinny) {.thread.} =
   var frameCounter = 0
-  # Store the starting time here
-  spinny.startTime = getMonoTime()
+  # Get the starting time before the loop
+  if spinny.trackTime:
+    spinny.startTime = getMonoTime()
 
   while spinny.running:
     let data = spinnyChannel.tryRecv()
