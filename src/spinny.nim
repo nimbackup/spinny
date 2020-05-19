@@ -1,14 +1,12 @@
-import std/[os, terminal, locks, times, monotimes, sequtils]
+import std/[os, terminal, locks, times, monotimes, strutils]
 
 import spinny/[colorize, spinners]
 
 export colorize
-export SpinnerKind, Spinner, makeSpinner
+export SpinnerKind, makeSpinner
 
 type
   Spinny = ref object
-    t: Thread[Spinny]
-    lock: Lock
     text: string
     running: bool
     frames: seq[string]
@@ -20,12 +18,14 @@ type
 
   EventKind = enum
     Stop, StopSuccess, StopError,
-    SymbolChange, TextChange,
+    SymbolChange, TextChange
 
-  SpinnyEvent = object
+  SpinnyEvent = tuple
     kind: EventKind
     payload: string
 
+var spinnyLock: Lock
+var spinnyThread: Thread[Spinny]
 var spinnyChannel: Channel[SpinnyEvent]
 
 proc newSpinny*(text: string, s: Spinner, time = false): Spinny =
@@ -42,13 +42,14 @@ proc newSpinny*(text: string, spinType: SpinnerKind, time = false): Spinny =
   newSpinny(text, Spinners[spinType], time)
 
 proc setSymbolColor*(spinny: Spinny, color: proc(x: string): string) =
-  spinny.frames = mapIt(spinny.frames, color(it))
+  for frame in spinny.frames.mitems():
+    frame = color(frame)
 
 proc setSymbol*(spinny: Spinny, symbol: string) =
-  spinnyChannel.send(SpinnyEvent(kind: SymbolChange, payload: symbol))
+  spinnyChannel.send((SymbolChange, symbol))
 
 proc setText*(spinny: Spinny, text: string) =
-  spinnyChannel.send(SpinnyEvent(kind: TextChange, payload: text))
+  spinnyChannel.send((TextChange, text))
 
 proc handleEvent(spinny: Spinny, eventData: SpinnyEvent): bool =
   result = true
@@ -70,14 +71,10 @@ proc handleEvent(spinny: Spinny, eventData: SpinnyEvent): bool =
     spinny.text = eventData.payload.bold.fgRed
 
 proc timeDiff(d: Duration): string =
-  # TODO: Handle hours?
-  let minutes = d.inMinutes()
-  let seconds = d.inSeconds()
-  result.add if minutes > 9: $minutes
-  else: "0" & $minutes
-  result.add ":"
-  result.add if seconds > 9: $seconds
-  else: "0" & $seconds
+  # No hours handling - seems like an overkill :D
+  let minutes = int d.inMinutes()
+  let seconds = int d.inSeconds()
+  result = minutes.intToStr(2) & ":" & seconds.intToStr(2)
 
 proc spinnyLoop(spinny: Spinny) {.thread.} =
   var frameCounter = 0
@@ -94,9 +91,7 @@ proc spinnyLoop(spinny: Spinny) {.thread.} =
         # This is required so we can reopen the same channel more than once
         # See https://github.com/nim-lang/Nim/issues/6369
         spinnyChannel = default(typeof(spinnyChannel))
-        # TODO: Do we need spinny.running at all?
         spinny.running = false
-        break
 
     stdout.flushFile()
     if not spinny.customSymbol:
@@ -105,7 +100,7 @@ proc spinnyLoop(spinny: Spinny) {.thread.} =
     if spinny.trackTime:
       text = timeDiff(getMonoTime() - spinny.startTime) & " " & text
 
-    withLock spinny.lock:
+    withLock spinnyLock:
       eraseLine()
       stdout.write(spinny.frame & " " & text)
       stdout.flushFile()
@@ -118,14 +113,16 @@ proc spinnyLoop(spinny: Spinny) {.thread.} =
       frameCounter += 1
 
 proc start*(spinny: Spinny) =
-  initLock(spinny.lock)
+  initLock(spinnyLock)
   spinnyChannel.open()
-  createThread(spinny.t, spinnyLoop, spinny)
+  createThread(spinnyThread, spinnyLoop, spinny)
 
 proc stop(spinny: Spinny, kind: EventKind, payload = "") =
-  spinnyChannel.send(SpinnyEvent(kind: kind, payload: payload))
-  spinnyChannel.send(SpinnyEvent(kind: Stop))
-  joinThread(spinny.t)
+  spinnyChannel.send((kind, payload))
+  if kind != Stop:
+    spinnyChannel.send((Stop, ""))
+  joinThread(spinnyThread)
+  deinitLock(spinnyLock)
   # We need to output a newline at the end
   echo ""
 

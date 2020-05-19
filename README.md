@@ -1,11 +1,7 @@
 Spinny
 ============
 
-[![GitHub version](https://badge.fury.io/gh/boennemann%2Fbadges.svg)](http://badge.fury.io/gh/boennemann%2Fbadges)
-[![Maintenance](https://img.shields.io/maintenance/yes/2018.svg)]()
-
 Spinny is a tiny terminal spinner package for [Nim Programming Language](https://nim-lang.org).
-![Spinny in Action](https://github.com/molnarmark/spinny/blob/master/action.gif)
 
 ## Getting Started
 
@@ -24,6 +20,7 @@ This library uses threads for spinners, so you have to compile your application
 ## Usage
 
 Spinny is quite easy to use. You can set the color, text or symbol of an already running spinner.
+Be aware that you can have only **one** active spinner at any given moment!
 
 ```nim
 import spinny, os
@@ -82,17 +79,3 @@ The following procs are available on a `Spinny` object:
 * `stop*(spinny: Spinny)`
 * `success*(spinny: Spinny, msg: string)`
 * `error*(spinny: Spinny, msg: string)`
-
-## Contributing
-
-All contributions are welcome. Feel free to make this project better. :)
-
-
-## Authors
-
-* Mark Molnar
-
-
-## License
-
-* MIT
