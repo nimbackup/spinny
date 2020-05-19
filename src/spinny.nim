@@ -1,5 +1,4 @@
-import os, terminal, locks
-import sequtils
+import std/[os, terminal, locks, times, monotimes, sequtils]
 
 import spinny/[colorize, spinners]
 
@@ -16,6 +15,8 @@ type
     frame: string
     interval: int
     customSymbol: bool
+    trackTime: bool
+    startTime: MonoTime
 
   EventKind = enum
     Stop, StopSuccess, StopError,
@@ -27,17 +28,20 @@ type
 
 var spinnyChannel: Channel[SpinnyEvent]
 
-proc newSpinny*(text: string, s: Spinner): Spinny =
-  Spinny(
+proc newSpinny*(text: string, s: Spinner, time = false): Spinny =
+  result = Spinny(
     text: text,
     running: true,
     frames: s.frames,
     customSymbol: false,
-    interval: s.interval
+    interval: s.interval,
+    trackTime: time
   )
+  if time:
+    result.startTime = getMonoTime()
 
-proc newSpinny*(text: string, spinType: SpinnerKind): Spinny =
-  newSpinny(text, Spinners[spinType])
+proc newSpinny*(text: string, spinType: SpinnerKind, time = false): Spinny =
+  newSpinny(text, Spinners[spinType], time)
 
 proc setSymbolColor*(spinny: Spinny, color: proc(x: string): string) =
   spinny.frames = mapIt(spinny.frames, color(it))
@@ -67,6 +71,16 @@ proc handleEvent(spinny: Spinny, eventData: SpinnyEvent): bool =
     spinny.frame = "✖".bold.fgRed
     spinny.text = eventData.payload.bold.fgRed
 
+proc timeDiff(d: Duration): string =
+  # TODO: Handle hours?
+  let minutes = d.inMinutes()
+  let seconds = d.inSeconds()
+  result.add if minutes > 9: $minutes
+  else: "0" & $minutes
+  result.add ":"
+  result.add if seconds > 9: $seconds
+  else: "0" & $seconds
+
 proc spinnyLoop(spinny: Spinny) {.thread.} =
   var frameCounter = 0
 
@@ -86,10 +100,13 @@ proc spinnyLoop(spinny: Spinny) {.thread.} =
     stdout.flushFile()
     if not spinny.customSymbol:
       spinny.frame = spinny.frames[frameCounter]
+    var text = spinny.text
+    if spinny.trackTime:
+      text = timeDiff(getMonoTime() - spinny.startTime) & " " & text
 
     withLock spinny.lock:
       eraseLine()
-      stdout.write(spinny.frame & " " & spinny.text)
+      stdout.write(spinny.frame & " " & text)
       stdout.flushFile()
 
     sleep(spinny.interval)
