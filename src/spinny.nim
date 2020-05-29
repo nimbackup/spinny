@@ -1,4 +1,4 @@
-import std/[os, terminal, locks, times, monotimes, strutils]
+import std/[os, terminal, times, monotimes, strutils]
 
 import spinny/[colorize, spinners]
 
@@ -24,7 +24,6 @@ type
     kind: EventKind
     payload: string
 
-var spinnyLock: Lock
 var spinnyThread: Thread[Spinny]
 var spinnyChannel: Channel[SpinnyEvent]
 
@@ -115,7 +114,6 @@ proc start*(spinny: Spinny) =
   if spinnyThread.running():
     # TODO: Maybe we should make this a Defect?
     raise newException(ValueError, "Previous Spinny instance wasn't stopped!")
-  initLock(spinnyLock)
   spinnyChannel.open()
   createThread(spinnyThread, spinnyLoop, spinny)
 
@@ -124,7 +122,6 @@ proc stop(spinny: Spinny, kind: EventKind, payload = "") =
   if kind != Stop:
     spinnyChannel.send((Stop, ""))
   joinThread(spinnyThread)
-  deinitLock(spinnyLock)
   # We need to output a newline at the end
   echo ""
 
