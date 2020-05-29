@@ -20,7 +20,8 @@ This library uses threads for spinners, so you have to compile your application
 ## Usage
 
 Spinny is quite easy to use. You can set the color, text or symbol of an already running spinner.
-Be aware that you can have only **one** active spinner at any given moment!
+
+Be aware that you can only have **one** active spinner at any given moment!
 
 ```nim
 import spinny, os
