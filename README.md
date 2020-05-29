@@ -10,8 +10,7 @@ You can use Nimble to install the package by running:
 nimble install spinny
 ```
 
-This library uses threads for running in the background, so you must compile your application
-(or add to your ``nim.cfg`` or ``config.nims``):
+This library uses threads for running in the background, so you must compile your application with or add to your ``nim.cfg`` or ``config.nims``:
 ```
 --threads:on
 ```
