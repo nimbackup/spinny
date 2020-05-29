@@ -10,8 +10,8 @@ You can use Nimble to install the package by running:
 nimble install spinny
 ```
 
-This library uses threads for spinners, so you have to compile your application
-(or add to your ``nim.cfg``):
+This library uses threads for running in the background, so you must compile your application
+(or add to your ``nim.cfg`` or ``config.nims``):
 ```
 --threads:on
 ```
@@ -55,8 +55,8 @@ You can even use custom spinners if predefined ones aren't suitable for your nee
 import spinny, os
 
 # makeSpinner accepts two arguments - the interval between different frames,
-# and frames themselves (as a sequence of strings)
-var spinner3 = newSpinny("I'm custom.", makeSpinner(100, @["x", "y"]))
+# and frames themselves as an array or a sequence of strings
+var spinner3 = newSpinny("I'm custom.", makeSpinner(100, ["x", "y"]))
 spinner3.setSymbolColor(fgGreen)
 spinner3.start()
 

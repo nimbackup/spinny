@@ -1,4 +1,4 @@
-version       = "0.3.0"
+version       = "0.3.1"
 author        = "Mark Molnar (molnarmark), Danil Yarantsev (Yardanico)"
 description   = "Terminal Spinners for Nim."
 license       = "MIT"

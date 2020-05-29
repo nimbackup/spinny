@@ -1,9 +1,7 @@
 import std/[os, terminal, times, monotimes, strutils]
 
 import spinny/[colorize, spinners]
-
-export colorize
-export SpinnerKind, makeSpinner
+export spinners, colorize
 
 type
   Spinny = ref object
@@ -36,9 +34,6 @@ proc newSpinny*(text: string, s: Spinner, time = false): Spinny =
     interval: s.interval,
     trackTime: time
   )
-
-proc newSpinny*(text: string, spinType: SpinnerKind, time = false): Spinny =
-  newSpinny(text, Spinners[spinType], time)
 
 proc setSymbolColor*(spinny: Spinny, color: proc(x: string): string) =
   for frame in spinny.frames.mitems():
@@ -133,25 +128,3 @@ proc success*(spinny: Spinny, msg: string) =
 
 proc error*(spinny: Spinny, msg: string) =
   spinny.stop(StopError, msg)
-
-when isMainModule:
-  var spinner1 = newSpinny("Loading file..".fgWhite, skDots)
-  spinner1.setSymbolColor(colorize.fgBlue)
-  spinner1.start()
-
-  # do some work here
-  for x in countup(5, 10):
-    sleep(500)
-
-  spinner1.success("File was loaded successfully.")
-
-  # Also show time
-  var spinner2 = newSpinny("Downloading files..".fgBlue, skDots5, time = true)
-  spinner2.setSymbolColor(fgLightBlue)
-  spinner2.start()
-
-  # do some work here
-  for x in countup(5, 10):
-    sleep(500)
-
-  spinner2.error("Sorry, something went wrong during downloading!")
