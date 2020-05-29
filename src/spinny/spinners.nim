@@ -3,16 +3,18 @@
 # https://gist.github.com/Yardanico/4137a09f171bfceae0b1dc531fdcc631
 type
   SpinnerKind* = enum
-    Dots, Dots2, Dots3, Dots4, Dots5, Dots6, Dots7, Dots8, Dots9,
-    Dots10, Dots11, Dots12, Line, Line​‌​2, Pipe, SimpleDots,
-    SimpleDotsScrolling, Star, Star2, Flip, Hamburger, GrowVertical,
-    GrowHorizontal​‌​, Balloon, Balloon2, Noise, Bounce, BoxBounce, BoxBounce2,
-    Triangle, Arc, Circle, SquareCorners, Cir​‌​cleQuarters, CircleHalves, Squish,
-    Toggle, Toggle2, Toggle3, Toggle4, Toggle5, Toggle6, Toggle7, Tog​‌​gle8,
-    Toggle9, Toggle10, Toggle11, Toggle12, Toggle13, Arrow, Arrow2, Arrow3,
-    BouncingBar, BouncingB​‌​all, Smiley, Monkey, Hearts,
-    Clock, Earth, Moon, Runner, Pong, Shark, Dqpb
-
+    skDots, skDots2, skDots3, skDots4, skDots5, skDots6, skDots7, skDots8,
+    skDots9, skDots10, skDots11, skDots12, skDots8Bit, skLine, skLine2, skPipe,
+    skSimpleDots, skSimpleDotsScrolling, skStar, skStar2, skFlip, skHamburger,
+    skGrowVertical, skGrowHorizontal, skBalloon, skBalloon2, skNoise, skBounce,
+    skBoxBounce, skBoxBounce2, skTriangle, skArc, skCircle, skSquareCorners,
+    skCircleQuarters, skCircleHalves, skSquish, skToggle, skToggle2, skToggle3,
+    skToggle4, skToggle5, skToggle6, skToggle7, skToggle8, skToggle9, skToggle10,
+    skToggle11, skToggle12, skToggle13, skArrow, skArrow2, skArrow3, skBouncingBar,
+    skBouncingBall, skSmiley, skMonkey, skHearts, skClock, skEarth, skMoon,
+    skRunner, skPong, skShark, skDqpb, skWeather, skChristmas, skGrenade,
+    skPoint, skLayer, skBetaWave
+  
   Spinner* = object
     interval*: int
     frames*: seq[string]
@@ -21,9 +23,7 @@ proc makeSpinner*(interval: int, frames: seq[string]): Spinner =
   Spinner(interval: interval, frames: frames)
 
 const Spinners*: array[SpinnerKind, Spinner] = [
-  # Dots
-  Spinner(
-    interval: 80, frames: @[
+  skDots: Spinner(interval: 80, frames: @[
       "⠋",
       "⠙",
       "⠹",
@@ -36,9 +36,7 @@ const Spinners*: array[SpinnerKind, Spinner] = [
       "⠏",
     ]
   ),
-  # Dots2
-  Spinner(
-    interval: 80, frames: @[
+  skDots2: Spinner(interval: 80, frames: @[
       "⣾",
       "⣽",
       "⣻",
@@ -49,9 +47,7 @@ const Spinners*: array[SpinnerKind, Spinner] = [
       "⣷",
     ]
   ),
-  # Dots3
-  Spinner(
-    interval: 80, frames: @[
+  skDots3: Spinner(interval: 80, frames: @[
       "⠋",
       "⠙",
       "⠚",
@@ -64,9 +60,7 @@ const Spinners*: array[SpinnerKind, Spinner] = [
       "⠓",
     ]
   ),
-  # Dots4
-  Spinner(
-    interval: 80, frames: @[
+  skDots4: Spinner(interval: 80, frames: @[
       "⠄",
       "⠆",
       "⠇",
@@ -83,9 +77,7 @@ const Spinners*: array[SpinnerKind, Spinner] = [
       "⠆",
     ]
   ),
-  # Dots5
-  Spinner(
-    interval: 80, frames: @[
+  skDots5: Spinner(interval: 80, frames: @[
       "⠋",
       "⠙",
       "⠚",
@@ -105,9 +97,7 @@ const Spinners*: array[SpinnerKind, Spinner] = [
       "⠋",
     ]
   ),
-  # Dots6
-  Spinner(
-    interval: 80, frames: @[
+  skDots6: Spinner(interval: 80, frames: @[
       "⠁",
       "⠉",
       "⠙",
@@ -134,9 +124,7 @@ const Spinners*: array[SpinnerKind, Spinner] = [
       "⠁",
     ]
   ),
-  # Dots7
-  Spinner(
-    interval: 80, frames: @[
+  skDots7: Spinner(interval: 80, frames: @[
       "⠈",
       "⠉",
       "⠋",
@@ -163,9 +151,7 @@ const Spinners*: array[SpinnerKind, Spinner] = [
       "⠈",
     ]
   ),
-  # Dots8
-  Spinner(
-    interval: 80, frames: @[
+  skDots8: Spinner(interval: 80, frames: @[
       "⠁",
       "⠁",
       "⠉",
@@ -197,9 +183,7 @@ const Spinners*: array[SpinnerKind, Spinner] = [
       "⠈",
     ]
   ),
-  # Dots9
-  Spinner(
-    interval: 80, frames: @[
+  skDots9: Spinner(interval: 80, frames: @[
       "⢹",
       "⢺",
       "⢼",
@@ -210,9 +194,7 @@ const Spinners*: array[SpinnerKind, Spinner] = [
       "⡏",
     ]
   ),
-  # Dots10
-  Spinner(
-    interval: 80, frames: @[
+  skDots10: Spinner(interval: 80, frames: @[
       "⢄",
       "⢂",
       "⢁",
@@ -222,9 +204,7 @@ const Spinners*: array[SpinnerKind, Spinner] = [
       "⡠",
     ]
   ),
-  # Dots11
-  Spinner(
-    interval: 100, frames: @[
+  skDots11: Spinner(interval: 100, frames: @[
       "⠁",
       "⠂",
       "⠄",
@@ -235,9 +215,7 @@ const Spinners*: array[SpinnerKind, Spinner] = [
       "⠈",
     ]
   ),
-  # Dots12
-  Spinner(
-    interval: 80, frames: @[
+  skDots12: Spinner(interval: 80, frames: @[
       "⢀⠀",
       "⡀⠀",
       "⠄⠀",
@@ -296,18 +274,273 @@ const Spinners*: array[SpinnerKind, Spinner] = [
       "⠀⡀",
     ]
   ),
-  # Line
-  Spinner(
-    interval: 130, frames: @[
+  skDots8Bit: Spinner(interval: 80, frames: @[
+      "⠀",
+      "⠁",
+      "⠂",
+      "⠃",
+      "⠄",
+      "⠅",
+      "⠆",
+      "⠇",
+      "⡀",
+      "⡁",
+      "⡂",
+      "⡃",
+      "⡄",
+      "⡅",
+      "⡆",
+      "⡇",
+      "⠈",
+      "⠉",
+      "⠊",
+      "⠋",
+      "⠌",
+      "⠍",
+      "⠎",
+      "⠏",
+      "⡈",
+      "⡉",
+      "⡊",
+      "⡋",
+      "⡌",
+      "⡍",
+      "⡎",
+      "⡏",
+      "⠐",
+      "⠑",
+      "⠒",
+      "⠓",
+      "⠔",
+      "⠕",
+      "⠖",
+      "⠗",
+      "⡐",
+      "⡑",
+      "⡒",
+      "⡓",
+      "⡔",
+      "⡕",
+      "⡖",
+      "⡗",
+      "⠘",
+      "⠙",
+      "⠚",
+      "⠛",
+      "⠜",
+      "⠝",
+      "⠞",
+      "⠟",
+      "⡘",
+      "⡙",
+      "⡚",
+      "⡛",
+      "⡜",
+      "⡝",
+      "⡞",
+      "⡟",
+      "⠠",
+      "⠡",
+      "⠢",
+      "⠣",
+      "⠤",
+      "⠥",
+      "⠦",
+      "⠧",
+      "⡠",
+      "⡡",
+      "⡢",
+      "⡣",
+      "⡤",
+      "⡥",
+      "⡦",
+      "⡧",
+      "⠨",
+      "⠩",
+      "⠪",
+      "⠫",
+      "⠬",
+      "⠭",
+      "⠮",
+      "⠯",
+      "⡨",
+      "⡩",
+      "⡪",
+      "⡫",
+      "⡬",
+      "⡭",
+      "⡮",
+      "⡯",
+      "⠰",
+      "⠱",
+      "⠲",
+      "⠳",
+      "⠴",
+      "⠵",
+      "⠶",
+      "⠷",
+      "⡰",
+      "⡱",
+      "⡲",
+      "⡳",
+      "⡴",
+      "⡵",
+      "⡶",
+      "⡷",
+      "⠸",
+      "⠹",
+      "⠺",
+      "⠻",
+      "⠼",
+      "⠽",
+      "⠾",
+      "⠿",
+      "⡸",
+      "⡹",
+      "⡺",
+      "⡻",
+      "⡼",
+      "⡽",
+      "⡾",
+      "⡿",
+      "⢀",
+      "⢁",
+      "⢂",
+      "⢃",
+      "⢄",
+      "⢅",
+      "⢆",
+      "⢇",
+      "⣀",
+      "⣁",
+      "⣂",
+      "⣃",
+      "⣄",
+      "⣅",
+      "⣆",
+      "⣇",
+      "⢈",
+      "⢉",
+      "⢊",
+      "⢋",
+      "⢌",
+      "⢍",
+      "⢎",
+      "⢏",
+      "⣈",
+      "⣉",
+      "⣊",
+      "⣋",
+      "⣌",
+      "⣍",
+      "⣎",
+      "⣏",
+      "⢐",
+      "⢑",
+      "⢒",
+      "⢓",
+      "⢔",
+      "⢕",
+      "⢖",
+      "⢗",
+      "⣐",
+      "⣑",
+      "⣒",
+      "⣓",
+      "⣔",
+      "⣕",
+      "⣖",
+      "⣗",
+      "⢘",
+      "⢙",
+      "⢚",
+      "⢛",
+      "⢜",
+      "⢝",
+      "⢞",
+      "⢟",
+      "⣘",
+      "⣙",
+      "⣚",
+      "⣛",
+      "⣜",
+      "⣝",
+      "⣞",
+      "⣟",
+      "⢠",
+      "⢡",
+      "⢢",
+      "⢣",
+      "⢤",
+      "⢥",
+      "⢦",
+      "⢧",
+      "⣠",
+      "⣡",
+      "⣢",
+      "⣣",
+      "⣤",
+      "⣥",
+      "⣦",
+      "⣧",
+      "⢨",
+      "⢩",
+      "⢪",
+      "⢫",
+      "⢬",
+      "⢭",
+      "⢮",
+      "⢯",
+      "⣨",
+      "⣩",
+      "⣪",
+      "⣫",
+      "⣬",
+      "⣭",
+      "⣮",
+      "⣯",
+      "⢰",
+      "⢱",
+      "⢲",
+      "⢳",
+      "⢴",
+      "⢵",
+      "⢶",
+      "⢷",
+      "⣰",
+      "⣱",
+      "⣲",
+      "⣳",
+      "⣴",
+      "⣵",
+      "⣶",
+      "⣷",
+      "⢸",
+      "⢹",
+      "⢺",
+      "⢻",
+      "⢼",
+      "⢽",
+      "⢾",
+      "⢿",
+      "⣸",
+      "⣹",
+      "⣺",
+      "⣻",
+      "⣼",
+      "⣽",
+      "⣾",
+      "⣿",
+    ]
+  ),
+  skLine: Spinner(interval: 130, frames: @[
       "-",
       "\\",
       "|",
       "/",
     ]
   ),
-  # Line2
-  Spinner(
-    interval: 100, frames: @[
+  skLine2: Spinner(interval: 100, frames: @[
       "⠂",
       "-",
       "–",
@@ -316,9 +549,7 @@ const Spinners*: array[SpinnerKind, Spinner] = [
       "-",
     ]
   ),
-  # Pipe
-  Spinner(
-    interval: 100, frames: @[
+  skPipe: Spinner(interval: 100, frames: @[
       "┤",
       "┘",
       "┴",
@@ -329,29 +560,23 @@ const Spinners*: array[SpinnerKind, Spinner] = [
       "┐",
     ]
   ),
-  # SimpleDots
-  Spinner(
-    interval: 400, frames: @[
-      ". ",
-      "..",
+  skSimpleDots: Spinner(interval: 400, frames: @[
+      ".  ",
+      ".. ",
       "...",
-      "  ",
+      "   ",
     ]
   ),
-  # SimpleDotsScrolling
-  Spinner(
-    interval: 200, frames: @[
-      ". ",
-      "..",
+  skSimpleDotsScrolling: Spinner(interval: 200, frames: @[
+      ".  ",
+      ".. ",
       "...",
       " ..",
       "  .",
-      "  ",
+      "   ",
     ]
   ),
-  # Star
-  Spinner(
-    interval: 70, frames: @[
+  skStar: Spinner(interval: 70, frames: @[
       "✶",
       "✸",
       "✹",
@@ -360,17 +585,13 @@ const Spinners*: array[SpinnerKind, Spinner] = [
       "✷",
     ]
   ),
-  # Star2
-  Spinner(
-    interval: 80, frames: @[
+  skStar2: Spinner(interval: 80, frames: @[
       "+",
       "x",
       "*",
     ]
   ),
-  # Flip
-  Spinner(
-    interval: 70, frames: @[
+  skFlip: Spinner(interval: 70, frames: @[
       "_",
       "_",
       "_",
@@ -385,17 +606,13 @@ const Spinners*: array[SpinnerKind, Spinner] = [
       "_",
     ]
   ),
-  # Hamburger
-  Spinner(
-    interval: 100, frames: @[
+  skHamburger: Spinner(interval: 100, frames: @[
       "☱",
       "☲",
       "☴",
     ]
   ),
-  # GrowVertical
-  Spinner(
-    interval: 120, frames: @[
+  skGrowVertical: Spinner(interval: 120, frames: @[
       "▁",
       "▃",
       "▄",
@@ -408,9 +625,7 @@ const Spinners*: array[SpinnerKind, Spinner] = [
       "▃",
     ]
   ),
-  # GrowHorizontal
-  Spinner(
-    interval: 120, frames: @[
+  skGrowHorizontal: Spinner(interval: 120, frames: @[
       "▏",
       "▎",
       "▍",
@@ -425,21 +640,17 @@ const Spinners*: array[SpinnerKind, Spinner] = [
       "▎",
     ]
   ),
-  # Balloon
-  Spinner(
-    interval: 140, frames: @[
-      "",
+  skBalloon: Spinner(interval: 140, frames: @[
+      " ",
       ".",
       "o",
       "O",
       "@",
       "*",
-      "",
+      " ",
     ]
   ),
-  # Balloon2
-  Spinner(
-    interval: 120, frames: @[
+  skBalloon2: Spinner(interval: 120, frames: @[
       ".",
       "o",
       "O",
@@ -449,53 +660,41 @@ const Spinners*: array[SpinnerKind, Spinner] = [
       ".",
     ]
   ),
-  # Noise
-  Spinner(
-    interval: 100, frames: @[
+  skNoise: Spinner(interval: 100, frames: @[
       "▓",
       "▒",
       "░",
     ]
   ),
-  # Bounce
-  Spinner(
-    interval: 120, frames: @[
+  skBounce: Spinner(interval: 120, frames: @[
       "⠁",
       "⠂",
       "⠄",
       "⠂",
     ]
   ),
-  # BoxBounce
-  Spinner(
-    interval: 120, frames: @[
+  skBoxBounce: Spinner(interval: 120, frames: @[
       "▖",
       "▘",
       "▝",
       "▗",
     ]
   ),
-  # BoxBounce2
-  Spinner(
-    interval: 100, frames: @[
+  skBoxBounce2: Spinner(interval: 100, frames: @[
       "▌",
       "▀",
       "▐",
       "▄",
     ]
   ),
-  # Triangle
-  Spinner(
-    interval: 50, frames: @[
+  skTriangle: Spinner(interval: 50, frames: @[
       "◢",
       "◣",
       "◤",
       "◥",
     ]
   ),
-  # Arc
-  Spinner(
-    interval: 100, frames: @[
+  skArc: Spinner(interval: 100, frames: @[
       "◜",
       "◠",
       "◝",
@@ -504,146 +703,108 @@ const Spinners*: array[SpinnerKind, Spinner] = [
       "◟",
     ]
   ),
-  # Circle
-  Spinner(
-    interval: 120, frames: @[
+  skCircle: Spinner(interval: 120, frames: @[
       "◡",
       "⊙",
       "◠",
     ]
   ),
-  # SquareCorners
-  Spinner(
-    interval: 180, frames: @[
+  skSquareCorners: Spinner(interval: 180, frames: @[
       "◰",
       "◳",
       "◲",
       "◱",
     ]
   ),
-  # CircleQuarters
-  Spinner(
-    interval: 120, frames: @[
+  skCircleQuarters: Spinner(interval: 120, frames: @[
       "◴",
       "◷",
       "◶",
       "◵",
     ]
   ),
-  # CircleHalves
-  Spinner(
-    interval: 50, frames: @[
+  skCircleHalves: Spinner(interval: 50, frames: @[
       "◐",
       "◓",
       "◑",
       "◒",
     ]
   ),
-  # Squish
-  Spinner(
-    interval: 100, frames: @[
+  skSquish: Spinner(interval: 100, frames: @[
       "╫",
       "╪",
     ]
   ),
-  # Toggle
-  Spinner(
-    interval: 250, frames: @[
+  skToggle: Spinner(interval: 250, frames: @[
       "⊶",
       "⊷",
     ]
   ),
-  # Toggle2
-  Spinner(
-    interval: 80, frames: @[
+  skToggle2: Spinner(interval: 80, frames: @[
       "▫",
       "▪",
     ]
   ),
-  # Toggle3
-  Spinner(
-    interval: 120, frames: @[
+  skToggle3: Spinner(interval: 120, frames: @[
       "□",
       "■",
     ]
   ),
-  # Toggle4
-  Spinner(
-    interval: 100, frames: @[
+  skToggle4: Spinner(interval: 100, frames: @[
       "■",
       "□",
       "▪",
       "▫",
     ]
   ),
-  # Toggle5
-  Spinner(
-    interval: 100, frames: @[
+  skToggle5: Spinner(interval: 100, frames: @[
       "▮",
       "▯",
     ]
   ),
-  # Toggle6
-  Spinner(
-    interval: 300, frames: @[
+  skToggle6: Spinner(interval: 300, frames: @[
       "ဝ",
       "၀",
     ]
   ),
-  # Toggle7
-  Spinner(
-    interval: 80, frames: @[
+  skToggle7: Spinner(interval: 80, frames: @[
       "⦾",
       "⦿",
     ]
   ),
-  # Toggle8
-  Spinner(
-    interval: 100, frames: @[
+  skToggle8: Spinner(interval: 100, frames: @[
       "◍",
       "◌",
     ]
   ),
-  # Toggle9
-  Spinner(
-    interval: 100, frames: @[
+  skToggle9: Spinner(interval: 100, frames: @[
       "◉",
       "◎",
     ]
   ),
-  # Toggle10
-  Spinner(
-    interval: 100, frames: @[
+  skToggle10: Spinner(interval: 100, frames: @[
       "㊂",
       "㊀",
       "㊁",
     ]
   ),
-  # Toggle11
-  Spinner(
-    interval: 50, frames: @[
+  skToggle11: Spinner(interval: 50, frames: @[
       "⧇",
       "⧆",
     ]
   ),
-  # Toggle12
-  Spinner(
-    interval: 120, frames: @[
+  skToggle12: Spinner(interval: 120, frames: @[
       "☗",
       "☖",
     ]
   ),
-  # Toggle13
-  Spinner(
-    interval: 80, frames: @[
+  skToggle13: Spinner(interval: 80, frames: @[
       "=",
       "*",
       "-",
     ]
   ),
-  # Arrow
-  Spinner(
-    interval: 100, frames: @[
+  skArrow: Spinner(interval: 100, frames: @[
       "←",
       "↖",
       "↑",
@@ -654,22 +815,18 @@ const Spinners*: array[SpinnerKind, Spinner] = [
       "↙",
     ]
   ),
-  # Arrow2
-  Spinner(
-    interval: 80, frames: @[
-      "⬆",
-      "↗",
-      "➡",
-      "↘",
-      "⬇",
-      "↙",
-      "⬅",
-      "↖",
+  skArrow2: Spinner(interval: 80, frames: @[
+      "⬆️ ",
+      "↗️ ",
+      "➡️ ",
+      "↘️ ",
+      "⬇️ ",
+      "↙️ ",
+      "⬅️ ",
+      "↖️ ",
     ]
   ),
-  # Arrow3
-  Spinner(
-    interval: 120, frames: @[
+  skArrow3: Spinner(interval: 120, frames: @[
       "▹▹▹▹▹",
       "▸▹▹▹▹",
       "▹▸▹▹▹",
@@ -678,9 +835,14 @@ const Spinners*: array[SpinnerKind, Spinner] = [
       "▹▹▹▹▸",
     ]
   ),
-  # BouncingBar
-  Spinner(
-    interval: 80, frames: @[
+  skBouncingBar: Spinner(interval: 80, frames: @[
+      "[    ]",
+      "[=   ]",
+      "[==  ]",
+      "[=== ]",
+      "[ ===]",
+      "[  ==]",
+      "[   =]",
       "[    ]",
       "[   =]",
       "[  ==]",
@@ -691,9 +853,7 @@ const Spinners*: array[SpinnerKind, Spinner] = [
       "[=   ]",
     ]
   ),
-  # BouncingBall
-  Spinner(
-    interval: 80, frames: @[
+  skBouncingBall: Spinner(interval: 80, frames: @[
       "( ●    )",
       "(  ●   )",
       "(   ●  )",
@@ -706,79 +866,64 @@ const Spinners*: array[SpinnerKind, Spinner] = [
       "(●     )",
     ]
   ),
-  # Smiley
-  Spinner(
-    interval: 200, frames: @[
-      "😄",
-      "😝",
+  skSmiley: Spinner(interval: 200, frames: @[
+      "😄 ",
+      "😝 ",
     ]
   ),
-  # Monkey
-  Spinner(
-    interval: 300, frames: @[
-      "🙈",
-      "🙈",
-      "🙉",
-      "🙊",
+  skMonkey: Spinner(interval: 300, frames: @[
+      "🙈 ",
+      "🙈 ",
+      "🙉 ",
+      "🙊 ",
     ]
   ),
-  # Hearts
-  Spinner(
-    interval: 100, frames: @[
-      "💛",
-      "💙",
-      "💜",
-      "💚",
-      "❤",
+  skHearts: Spinner(interval: 100, frames: @[
+      "💛 ",
+      "💙 ",
+      "💜 ",
+      "💚 ",
+      "❤️ ",
     ]
   ),
-  # Clock
-  Spinner(
-    interval: 100, frames: @[
-      "🕐",
-      "🕑",
-      "🕒",
-      "🕓",
-      "🕔",
-      "🕕",
-      "🕖",
-      "🕗",
-      "🕘",
-      "🕙",
-      "🕚",
+  skClock: Spinner(interval: 100, frames: @[
+      "🕛 ",
+      "🕐 ",
+      "🕑 ",
+      "🕒 ",
+      "🕓 ",
+      "🕔 ",
+      "🕕 ",
+      "🕖 ",
+      "🕗 ",
+      "🕘 ",
+      "🕙 ",
+      "🕚 ",
     ]
   ),
-  # Earth
-  Spinner(
-    interval: 180, frames: @[
-      "🌍",
-      "🌎",
-      "🌏",
+  skEarth: Spinner(interval: 180, frames: @[
+      "🌍 ",
+      "🌎 ",
+      "🌏 ",
     ]
   ),
-  # Moon
-  Spinner(
-    interval: 80, frames: @[
-      "🌑",
-      "🌒",
-      "🌓",
-      "🌔",
-      "🌕",
-      "🌖",
-      "🌗",
-      "🌘",
+  skMoon: Spinner(interval: 80, frames: @[
+      "🌑 ",
+      "🌒 ",
+      "🌓 ",
+      "🌔 ",
+      "🌕 ",
+      "🌖 ",
+      "🌗 ",
+      "🌘 ",
     ]
   ),
-  # Runner
-  Spinner(
-    interval: 140, frames: @[
-      "🚶",
-      "🏃",
+  skRunner: Spinner(interval: 140, frames: @[
+      "🚶 ",
+      "🏃 ",
     ]
   ),
-  # Pong
-  Spinner(
-    interval: 80, frames: @[
+  skPong: Spinner(interval: 80, frames: @[
       "▐⠂       ▌",
       "▐⠈       ▌",
       "▐ ⠂      ▌",
@@ -811,9 +956,7 @@ const Spinners*: array[SpinnerKind, Spinner] = [
       "▐⠠       ▌",
     ]
   ),
-  # Shark
-  Spinner(
-    interval: 120, frames: @[
+  skShark: Spinner(interval: 120, frames: @[
       "▐|\\____________▌",
       "▐_|\\___________▌",
       "▐__|\\__________▌",
@@ -842,13 +985,83 @@ const Spinners*: array[SpinnerKind, Spinner] = [
       "▐/|____________▌",
     ]
   ),
-  # Dqpb
-  Spinner(
-    interval: 100, frames: @[
+  skDqpb: Spinner(interval: 100, frames: @[
       "d",
       "q",
       "p",
       "b",
+    ]
+  ),
+  skWeather: Spinner(interval: 100, frames: @[
+      "☀️ ",
+      "☀️ ",
+      "☀️ ",
+      "🌤 ",
+      "⛅️ ",
+      "🌥 ",
+      "☁️ ",
+      "🌧 ",
+      "🌨 ",
+      "🌧 ",
+      "🌨 ",
+      "🌧 ",
+      "🌨 ",
+      "⛈ ",
+      "🌨 ",
+      "🌧 ",
+      "🌨 ",
+      "☁️ ",
+      "🌥 ",
+      "⛅️ ",
+      "🌤 ",
+      "☀️ ",
+      "☀️ ",
+    ]
+  ),
+  skChristmas: Spinner(interval: 400, frames: @[
+      "🌲",
+      "🎄",
+    ]
+  ),
+  skGrenade: Spinner(interval: 80, frames: @[
+      "،   ",
+      "′   ",
+      " ´ ",
+      " ‾ ",
+      "  ⸌",
+      "  ⸊",
+      "  |",
+      "  ⁎",
+      "  ⁕",
+      " ෴ ",
+      "  ⁓",
+      "   ",
+      "   ",
+      "   ",
+    ]
+  ),
+  skPoint: Spinner(interval: 125, frames: @[
+      "∙∙∙",
+      "●∙∙",
+      "∙●∙",
+      "∙∙●",
+      "∙∙∙",
+    ]
+  ),
+  skLayer: Spinner(interval: 150, frames: @[
+      "-",
+      "=",
+      "≡",
+    ]
+  ),
+  skBetaWave: Spinner(interval: 80, frames: @[
+      "ρββββββ",
+      "βρβββββ",
+      "ββρββββ",
+      "βββρβββ",
+      "ββββρββ",
+      "βββββρβ",
+      "ββββββρ",
     ]
   ),
 ]

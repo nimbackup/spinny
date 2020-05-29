@@ -20,13 +20,14 @@ This library uses threads for spinners, so you have to compile your application
 ## Usage
 
 Spinny is quite easy to use. You can set the color, text or symbol of an already running spinner.
+Spinny also optinally supports showing passed time (in seconds and hours).
 
 Be aware that you can only have **one** active spinner at any given moment!
 
 ```nim
 import spinny, os
 
-var spinner1 = newSpinny("Loading file..".fgWhite, Dots)
+var spinner1 = newSpinny("Loading file..".fgWhite, skDots)
 spinner1.setSymbolColor(fgBlue)
 spinner1.start()
 
@@ -36,7 +37,8 @@ for x in countup(5, 10):
 
 spinner1.success("File was loaded successfully.")
 
-var spinner2 = newSpinny("Downloading files..".fgBlue, Dots5)
+# Also show time
+var spinner2 = newSpinny("Downloading files..".fgBlue, skDots5, time = true)
 spinner2.setSymbolColor(fgLightBlue)
 spinner2.start()
 

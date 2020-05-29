@@ -100,10 +100,9 @@ proc spinnyLoop(spinny: Spinny) {.thread.} =
     if spinny.trackTime:
       text = timeDiff(getMonoTime() - spinny.startTime) & " " & text
 
-    withLock spinnyLock:
-      eraseLine()
-      stdout.write(spinny.frame & " " & text)
-      stdout.flushFile()
+    eraseLine()
+    stdout.write(spinny.frame & " " & text)
+    stdout.flushFile()
 
     sleep(spinny.interval)
 
@@ -113,6 +112,9 @@ proc spinnyLoop(spinny: Spinny) {.thread.} =
       frameCounter += 1
 
 proc start*(spinny: Spinny) =
+  if spinnyThread.running():
+    # TODO: Maybe we should make this a Defect?
+    raise newException(ValueError, "Previous Spinny instance wasn't stopped!")
   initLock(spinnyLock)
   spinnyChannel.open()
   createThread(spinnyThread, spinnyLoop, spinny)
@@ -134,3 +136,25 @@ proc success*(spinny: Spinny, msg: string) =
 
 proc error*(spinny: Spinny, msg: string) =
   spinny.stop(StopError, msg)
+
+when isMainModule:
+  var spinner1 = newSpinny("Loading file..".fgWhite, skDots)
+  spinner1.setSymbolColor(colorize.fgBlue)
+  spinner1.start()
+
+  # do some work here
+  for x in countup(5, 10):
+    sleep(500)
+
+  spinner1.success("File was loaded successfully.")
+
+  # Also show time
+  var spinner2 = newSpinny("Downloading files..".fgBlue, skDots5, time = true)
+  spinner2.setSymbolColor(fgLightBlue)
+  spinner2.start()
+
+  # do some work here
+  for x in countup(5, 10):
+    sleep(500)
+
+  spinner2.error("Sorry, something went wrong during downloading!")

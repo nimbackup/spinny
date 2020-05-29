@@ -1,5 +1,5 @@
-version       = "0.2.0"
-author        = "Mark Molnar"
+version       = "0.3.0"
+author        = "Mark Molnar (molnarmark), Danil Yarantsev (Yardanico)"
 description   = "Terminal Spinners for Nim."
 license       = "MIT"
 srcDir        = "src"
